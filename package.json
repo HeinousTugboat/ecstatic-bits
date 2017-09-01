@@ -2,7 +2,7 @@
   "name": "ecstatic-bits",
   "version": "1.0.0",
   "description": "YAECS",
-  "main": "lib/index.js",
+  "main": "lib/ecstatic-bits.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
