@@ -1,6 +1,9 @@
 # ecstatic-bits
 Everyone needs their own ECS right?
 
-## Master
+[Homepage](https://heinoustugboat.github.io/ecstatic-bits/) (yes, it's broken. sorry.)
 
-Should be able to get at dem files in `master/docs` now!
+[SystemJS Library](https://heinoustugboat.github.io/ecstatic-bits/lib.js)
+
+[Node Library](https://heinoustugboat.github.io/ecstatic-bits/lib/index.js)
+
