@@ -4,7 +4,8 @@
   "description": "YAECS",
   "main": "lib/ecstatic-bits.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo Foofoofoo",
+    "test-real": "mocha test/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,13 @@
   "dependencies": {
     "ts-node": "^3.3.0",
     "typescript": "^2.5.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.42",
+    "chai": "^4.1.2",
+    "karma": "^1.7.1",
+    "mocha": "^3.5.0",
+    "sinon": "^3.2.1"
   }
 }
