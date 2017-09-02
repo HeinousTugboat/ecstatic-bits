@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for system.ts</title>
+    <title>Code coverage report for entity-manager.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="index.html">All files</a> system.ts
+      <a href="index.html">All files</a> entity-manager.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -53,7 +53,27 @@
 8
 9
 10
-11</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -63,14 +83,24 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * The System that runs through the entities..
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Entity } from './entity';
+import { Component, ComponentType } from './component';
+&nbsp;
+/**
+ * The thing that actually runs Entities..
  */
-export interface ISystem {
-    processOneGameTick(previousFrameTime: number): void;
+export interface IEntityManager {
+    list: Entity[];
+    types: Map&lt;ComponentType, Component[]&gt;;
+    getComponent&lt;T extends ComponentType&gt;(entity: Entity): Component | undefined;
+    getAllComponentsOfType&lt;T extends ComponentType&gt;(): Component[];
+    getAllEntitiesPossessingComponent&lt;T extends ComponentType&gt;(): Entity[];
+    addComponent&lt;T extends ComponentType&gt;(entity: Entity, component: Component): void;
+    createEntity(): Entity;
+    killEntity(entity: Entity): void;
 }
 &nbsp;
-export class System /* implements ISystem */ {
+export class EntityManager /* implements IEntityManager */ {
 &nbsp;
 }
 &nbsp;</pre></td></tr>

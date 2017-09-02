@@ -11,4 +11,9 @@ describe('ecstatictBits', function () {
     it('should exist', function () {
         expect(ecstaticBits).to.exist;
     })
+    it('should be invokable', function() {
+        let bits = new ecstaticBits;
+        expect(bits).to.exist;
+        expect(bits instanceof ecstaticBits).to.be.true;
+    })
 })
