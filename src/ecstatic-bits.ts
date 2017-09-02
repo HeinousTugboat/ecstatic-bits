@@ -21,3 +21,5 @@ thing.set(Foo, [Fee]);
 thing.get(Foo);
 let other: Map<string, ComponentType> = new Map;
 other.set(Foo.label, Foo);
+
+console.log('fee');

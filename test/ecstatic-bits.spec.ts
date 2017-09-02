@@ -1,15 +1,14 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 import 'mocha';
 import ecstaticBits from '../src/ecstatic-bits';
 
-describe('Thing', function() {
-    it('should do stuff', function() {
+describe('base tests', function () {
+    it('should at least run', function () {
         expect(true).to.be.true;
     })
-    it('should exist', function() {
+})
+describe('ecstatictBits', function () {
+    it('should exist', function () {
         expect(ecstaticBits).to.exist;
-    })
-    it('should NOT exist!', function() {
-        // expect(false).to.be.true;
     })
 })
