@@ -4,8 +4,27 @@
   "description": "YAECS",
   "main": "lib/ecstatic-bits.js",
   "scripts": {
-    "test": "echo Foofoofoo",
-    "test-real": "mocha test/**/*.ts"
+    "test": "nyc mocha",
+    "test:vsc": "nyc mocha -R tap test/**/*.ts || @echo off"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      "tsx"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "all": true
   },
   "repository": {
     "type": "git",
@@ -25,8 +44,11 @@
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.42",
     "chai": "^4.1.2",
+    "istanbul": "^0.4.5",
     "karma": "^1.7.1",
     "mocha": "^3.5.0",
-    "sinon": "^3.2.1"
+    "nyc": "^11.1.0",
+    "sinon": "^3.2.1",
+    "source-map-support": "^0.4.16"
   }
 }
