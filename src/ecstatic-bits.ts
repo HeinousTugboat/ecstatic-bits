@@ -3,7 +3,7 @@ import { Component, ComponentType } from './component';
 import { System } from './system';
 import { Assemblage } from './assemblage';
 
-export class ecstaticBits {
+export default class ecstaticBits {
     constructor() {
         console.log('Foo.');
 
