@@ -1,3 +1,7 @@
-export interface Assemblage {
+/**
+ * An Assemblage of Stuff.
+ *
+ */
+export class Assemblage {
 
 }

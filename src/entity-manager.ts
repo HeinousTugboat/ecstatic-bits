@@ -3,10 +3,8 @@ import { Component, ComponentType } from './component';
 
 /**
  * The thing that actually runs Entities..
- *
- * @interface EntityManager
  */
-interface EntityManager {
+export interface IEntityManager {
     list: Entity[];
     types: Map<ComponentType, Component[]>;
     getComponent<T extends ComponentType>(entity: Entity): Component | undefined;
@@ -15,4 +13,8 @@ interface EntityManager {
     addComponent<T extends ComponentType>(entity: Entity, component: Component): void;
     createEntity(): Entity;
     killEntity(entity: Entity): void;
+}
+
+export class EntityManager /* implements IEntityManager */ {
+
 }

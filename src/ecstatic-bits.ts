@@ -1,25 +1,30 @@
 import { Entity } from './entity';
+import { EntityManager } from './entity-manager';
 import { Component, ComponentType } from './component';
 import { System } from './system';
 import { Assemblage } from './assemblage';
 
 export default class ecstaticBits {
     constructor() {
-        console.log('Foo.');
+        console.log('ecstaticBits Invoked!');
 
     }
 }
 
-let entity: Entity = { id: 1 };
+let testEntity: Entity = new Entity;
+let TestComponent: ComponentType = Component.Builder('test-component');
+let testComp: Component = new TestComponent(1);
 
-let Foo = Component.Builder('Test-Label!');
-let Fee = new Foo(3);
-type stt = typeof Fee;
+let componentMap: Map<ComponentType, Component[]> = new Map;
+componentMap.set(TestComponent, [testComp]);
+console.log(componentMap.get(TestComponent));
 
-let thing: Map<ComponentType, Component[]> = new Map;
-thing.set(Foo, [Fee]);
-thing.get(Foo);
-let other: Map<string, ComponentType> = new Map;
-other.set(Foo.label, Foo);
+let labelMap: Map<string, ComponentType> = new Map;
+labelMap.set(TestComponent.label, TestComponent);
+console.log(labelMap.get('test-component'));
 
-console.log('fee');
+export * from './entity';
+export * from './entity-manager';
+export * from './component';
+export * from './system';
+export * from './assemblage';

@@ -1,9 +1,10 @@
 /**
  * The System that runs through the entities..
- *
- * @export
- * @interface System
  */
-export interface System {
+export interface ISystem {
     processOneGameTick(previousFrameTime: number): void;
+}
+
+export class System /* implements ISystem */ {
+
 }
