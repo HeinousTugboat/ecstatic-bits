@@ -1,9 +1,9 @@
 # ecstatic-bits
 Everyone needs their own ECS right?
 
-[Homepage](https://heinoustugboat.github.io/ecstatic-bits/) (yes, it's broken. sorry.)
+[Homepage](https://heinoustugboat.github.io/ecstatic-bits/)
 
-[SystemJS Library](https://heinoustugboat.github.io/ecstatic-bits/lib.js)
+[SystemJS Bundle](https://heinoustugboat.github.io/ecstatic-bits/lib/bundle.js)
 
-[Node Library](https://heinoustugboat.github.io/ecstatic-bits/lib/index.js)
+[Node Library](https://heinoustugboat.github.io/ecstatic-bits/lib/ecstatic-bits.js)
 
