@@ -22,3 +22,4 @@ class Component {
 Component.list = {};
 Component.types = new Map;
 exports.Component = Component;
+//# sourceMappingURL=component.js.map

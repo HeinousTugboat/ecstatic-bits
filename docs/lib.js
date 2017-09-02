@@ -48,7 +48,7 @@ System.register("entity", [], function (exports_3, context_3) {
         }
     };
 });
-System.register("entity-manager", [], function (exports_4, context_4) {
+System.register("system", [], function (exports_4, context_4) {
     "use strict";
     var __moduleName = context_4 && context_4.id;
     return {
@@ -57,18 +57,9 @@ System.register("entity-manager", [], function (exports_4, context_4) {
         }
     };
 });
-System.register("system", [], function (exports_5, context_5) {
+System.register("ecstatic-bits", ["component"], function (exports_5, context_5) {
     "use strict";
     var __moduleName = context_5 && context_5.id;
-    return {
-        setters: [],
-        execute: function () {
-        }
-    };
-});
-System.register("index", ["component"], function (exports_6, context_6) {
-    "use strict";
-    var __moduleName = context_6 && context_6.id;
     var component_1, ecstaticBits, entity, Foo, Fee, thing, other;
     return {
         setters: [
@@ -82,7 +73,7 @@ System.register("index", ["component"], function (exports_6, context_6) {
                     console.log('Foo.');
                 }
             };
-            exports_6("ecstaticBits", ecstaticBits);
+            exports_5("default", ecstaticBits);
             entity = { id: 1 };
             Foo = component_1.Component.Builder('Test-Label!');
             Fee = new Foo(3);
@@ -91,6 +82,16 @@ System.register("index", ["component"], function (exports_6, context_6) {
             thing.get(Foo);
             other = new Map;
             other.set(Foo.label, Foo);
+            console.log('fee');
+        }
+    };
+});
+System.register("entity-manager", [], function (exports_6, context_6) {
+    "use strict";
+    var __moduleName = context_6 && context_6.id;
+    return {
+        setters: [],
+        execute: function () {
         }
     };
 });
