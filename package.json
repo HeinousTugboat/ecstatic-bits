@@ -38,17 +38,17 @@
   "homepage": "https://github.com/HeinousTugboat/ecstatic-bits#readme",
   "dependencies": {
     "ts-node": "^3.3.0",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.3"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
-    "@types/mocha": "^2.2.42",
+    "@types/mocha": "^2.2.43",
     "chai": "^4.1.2",
     "istanbul": "^0.4.5",
     "karma": "^1.7.1",
-    "mocha": "^3.5.0",
-    "nyc": "^11.1.0",
-    "sinon": "^3.2.1",
-    "source-map-support": "^0.4.16"
+    "mocha": "^3.5.3",
+    "nyc": "^11.2.1",
+    "sinon": "^4.0.0",
+    "source-map-support": "^0.4.18"
   }
 }
