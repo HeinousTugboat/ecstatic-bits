@@ -22,9 +22,10 @@ console.log(componentMap.get(TestComponent));
 let labelMap: Map<string, ComponentType> = new Map;
 labelMap.set(TestComponent.label, TestComponent);
 console.log(labelMap.get('test-component'));
-
+console.log(Math.log10(100));
 export * from './entity';
 export * from './entity-manager';
 export * from './component';
 export * from './system';
 export * from './assemblage';
+

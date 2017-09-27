@@ -9,16 +9,17 @@ interface ComponentMap {
 }
 
 export class Entity {
-    static id: number = 0;
+    static id = 0;
     static list: Map<number, Entity> = new Map;
-    static find() { }
-
     id: number;
     components: ComponentMap = {};
+
     constructor(public name: string = 'Unnamed Entity') {
         this.id = Entity.id++;
         Entity.list.set(this.id, this);
+
     }
+    static find() { }
     add() { }
     remove() { }
     toJSON() { }
