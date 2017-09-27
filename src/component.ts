@@ -9,31 +9,44 @@ export interface ComponentType {
 export abstract class Component {
     static list: { [K: string]: ComponentType } = {};
     static types: Map<ComponentType, Component[]> = new Map;
+    abstract label: string;
+    // abstract list: Component[];
+
     static Builder(label: string) {
         if (Component.list[label]) {
             return Component.list[label];
         }
-        let newType = class ComponentType implements Component, ComponentType{
+        const newType = class ComponentType implements Component, ComponentType { // tslint:disable-line: no-shadowed-variable
             static label: string = label;
             static list: Component[] = [];
-            list: Component[];
             label: string = label;
+
             constructor(public num: number) {
-                // super();
                 ComponentType.list.push(this);
-                // super(label);
             }
+            public initialize(): void { }
             public getComponentType(): string {
                 return this.label;
             }
         };
         Component.list[label] = newType;
-        let newList = newType.list;
+        const newList = newType.list;
         Component.types.set(newType, newList);
         return newType;
     }
-    abstract label: string;
+
+    abstract initialize(): void;
     abstract getComponentType(): string;
-    abstract list: Component[];
-    // constructor() {}
 }
+
+const TestComponent = Component.Builder('test');
+const OtherComponent = Component.Builder('other');
+
+const tester2 = new TestComponent(2);
+const tester3 = new TestComponent(1);
+
+console.log(Component.list);
+console.log(Component.types);
+console.log(TestComponent.list);
+
+tester2.initialize();
