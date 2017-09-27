@@ -5,7 +5,7 @@ import { Component, ComponentType } from '../src/component';
 describe('Component', function() {
     it('should exist', function() {
         expect(Component).to.exist;
-    })
+    });
     describe('Builder', function() {
         it('should be added to Component.list', function() {
             const TestComponent = Component.Builder('test-component');
@@ -15,7 +15,7 @@ describe('Component', function() {
         it('should return existing type if label already exists', function() {
             const TestComponent = Component.Builder('test-component');
             expect(Component.Builder('test-component')).to.deep.equal(TestComponent);
-        })
+        });
         it('should have a list of all instances of itself', function() {
             const TestComponent = Component.Builder('test-component');
             const test = new TestComponent(1);
@@ -31,22 +31,22 @@ describe('Component', function() {
             expect(list).to.exist;
             if (!list) { throw new Error('lolwat?'); }
             expect(list[0]).to.deep.equal(test);
-        })
+        });
         it('should have a list of all systems it is attached to', function() {
             expect(true).to.be.false;
         });
-    })
-})
+    });
+});
 describe('ComponentType', function() {
     let TestComponent: ComponentType;
     beforeEach(function() {
         TestComponent = Component.Builder('test-component');
-    })
+    });
     describe('instance', function() {
         let component: Component;
         beforeEach(function() {
             component = new TestComponent();
-        })
+        });
         it('should have an initialize function');
         describe('constructor', function() {
             it('should generate a component instance');
@@ -58,8 +58,8 @@ describe('ComponentType', function() {
             it('should call its own initialize function when generated');
         });
         it('should have getComponentType()', function() {
-            let str = component.getComponentType();
+            const str = component.getComponentType();
             expect(str).to.equal('test-component');
-        })
-    })
-})
+        });
+    });
+});
