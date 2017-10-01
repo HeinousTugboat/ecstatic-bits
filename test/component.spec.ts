@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import 'mocha';
-import { Component, ComponentType, ComponentTypes } from '../src/component';
+import { Component, ComponentType } from '../src/component';
 
 describe('Component', function() {
     it('should exist', function() {
@@ -13,8 +13,8 @@ describe('Component', function() {
             BuiltTestComponent.prototype.initialize = () => {};
         });
         it('should be added to ComponentTypes', function() {
-            expect(ComponentTypes).to.have.property('built-test-component');
-            expect(ComponentTypes['built-test-component']).to.deep.equal(BuiltTestComponent);
+            expect(Component.types.get('built-test-component')).to.not.be.undefined;
+            expect(Component.types.get('built-test-component')).to.deep.equal(BuiltTestComponent);
         });
         it('should return existing type if label already exists', function() {
             expect(Component.Builder('built-test-component')).to.deep.equal(BuiltTestComponent);
@@ -22,16 +22,16 @@ describe('Component', function() {
         it('should have a list of all instances of itself', function() {
             const test = new BuiltTestComponent(1);
             expect(BuiltTestComponent).to.have.property('list');
-            expect(BuiltTestComponent.list[0]).to.deep.equal(test);
+            expect(BuiltTestComponent.list.has(test)).to.be.true;
         });
         it('should have a map of types to arrays of instances', function() {
             const test = new BuiltTestComponent(1);
             expect(Component).to.have.property('types');
-            expect(Component.types.has(BuiltTestComponent)).to.be.true;
-            const list = Component.types.get(BuiltTestComponent);
-            expect(list).to.exist;
-            if (!list) { throw new Error('lolwat?'); }
-            expect(list[0]).to.deep.equal(test);
+            expect(Component.types.has(BuiltTestComponent.label)).to.be.true;
+            const component = Component.types.get(BuiltTestComponent.label);
+            expect(component).to.exist;
+            if (!component || !component.list) { throw new Error('lolwat?'); }
+            expect(component.list.has(test)).to.be.true;
         });
         it('should have getComponentType()', function() {
             const test = new BuiltTestComponent(1);
@@ -51,8 +51,8 @@ describe('Component', function() {
         }
 
         it('should be added to Component.list', function() {
-            expect(ComponentTypes).to.have.property('test-component');
-            expect(ComponentTypes['class-test-component']).to.deep.equal(ClassTestComponent.prototype.constructor);
+            expect(Component.types.has('test-component')).to.be.true;
+            expect(Component.types.get('class-test-component')).to.deep.equal(ClassTestComponent.prototype.constructor);
         });
         it('should warn if using default initialize implementation', function() {
             const component = new ClassTestComponent(3);

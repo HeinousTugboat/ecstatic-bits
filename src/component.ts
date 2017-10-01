@@ -1,7 +1,7 @@
 
 export interface ComponentType {
     label: string;
-    list: Component[];
+    list: Set<Component>;
     new(...args: any[]): Component;
 }
 
@@ -14,14 +14,14 @@ export interface ComponentType {
  */
 export function ComponentType(label: string) {
     return (constructor: ComponentType) => {
-        if (ComponentTypes[label] !== undefined) {
+        if (Component.types.has(label)) {
             throw new Error('Attempting to register ' + label + '!');
         }
         constructor.label = label;
-        constructor.list = [];
+        constructor.list = new Set<typeof constructor.prototype>();
         constructor.prototype.label = label;
-        ComponentTypes[label] = constructor;
-        Component.types.set(constructor, constructor.list);
+        // ComponentTypes[label] = constructor;
+        Component.types.set(label, constructor);
     };
 }
 
@@ -30,7 +30,7 @@ export function ComponentType(label: string) {
  *
  * NB: Should only be added to by @ComponentType()!!
  */
-export const ComponentTypes: { [K: string]: ComponentType } = {};
+// export const ComponentTypes: { [K: string]: ComponentType } = {};
 
 /**
  * Core Component class. Is Abstract by itself. Can either be instantiated using
@@ -41,8 +41,8 @@ export const ComponentTypes: { [K: string]: ComponentType } = {};
  * components.
  */
 export abstract class Component {
-    static types: Map<ComponentType, Component[]> = new Map;
-    static list: Component[];
+    static types: Map<string, ComponentType> = new Map;
+    static list: Set<Component>;
     static label: string;
     public label: string;
     /**
@@ -51,12 +51,12 @@ export abstract class Component {
      * typesafety when using this.
      */
     static Builder(label: string): ComponentType {
-        if (ComponentTypes[label]) {
-            return ComponentTypes[label];
+        if (Component.types.has(label)) {
+            return Component.types.get(label) as ComponentType;
         } else {
             @ComponentType(label)
             class GenericComponent extends Component {
-                static list: Component[] = [];
+                static list: Set<GenericComponent> = new Set;
 
                 constructor(public eid: number) {
                     super(eid);
@@ -72,7 +72,7 @@ export abstract class Component {
     constructor(public eid: number) {
         const ctor = Object.getPrototypeOf(this).constructor;
         this.label = ctor.label;
-        ComponentTypes[ctor.label].list.push(this);
+        (<ComponentType>Component.types.get(ctor.label)).list.add(this);
         try {
             this.initialize();
         } catch (e) {
@@ -106,4 +106,3 @@ export abstract class Component {
 //         console.log('test-component-test');
 //     }
 // }
-
