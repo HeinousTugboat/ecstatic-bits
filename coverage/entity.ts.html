@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/7</span>
+        <span class='fraction'>30/30</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>1/1</span>
+        <span class='fraction'>11/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">20% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/5</span>
+        <span class='fraction'>9/9</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/7</span>
+        <span class='fraction'>28/28</span>
       </div>
     </div>
   </div>
@@ -69,11 +69,36 @@
 24
 25
 26
-27</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -83,43 +108,105 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">23x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Component } from './component';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Component, ComponentType } from './component';
 &nbsp;
 /**
  * Basic Entity. It's just a number.
  */
 &nbsp;
-interface ComponentMap {
-    [key: string]: Component;
-}
-&nbsp;
 export class Entity {
-    static id = 0;
+    static id = 1000;
     static list: Map&lt;number, Entity&gt; = new Map;
     id: number;
-    components: ComponentMap = {};
+    components: Map&lt;string, Component&gt; = new Map;
 &nbsp;
     constructor(public name: string = 'Unnamed Entity') {
         this.id = Entity.id++;
         Entity.list.set(this.id, this);
 &nbsp;
     }
-<span class="fstat-no" title="function not covered" >    static</span> find() { }
-<span class="fstat-no" title="function not covered" >    add</span>() { }
-<span class="fstat-no" title="function not covered" >    remove</span>() { }
-<span class="fstat-no" title="function not covered" >    toJSON</span>() { }
+    static get(id: string | number): Entity | undefined | Entity[] {
+        if (typeof id === 'number') {
+            return Entity.list.get(id);
+        } else {
+            return [...Entity.list.values()].filter((val: Entity) =&gt; val.name === id);
+        }
+    }
+    static print(): void {
+        console.log('Full Entity List [' + Entity.list.size + ']: ');
+        [...Entity.list.values()].forEach((x) =&gt; { console.log(x); });
+    }
+    get(component: string): Component | undefined {
+        return this.components.get(component);
+    }
+    add(component: string): Component | undefined {
+        if (this.components.has(component)) {
+            return this.get(component);
+        }
+        const componentType = Component.types.get(component);
+        if (!componentType || componentType === undefined) {
+            throw new Error('Unable to locate Component Type: ' + component);
+        }
+        const newComponent = new componentType(this.id);
+        this.components.set(component, newComponent);
+        return newComponent;
+    }
+    remove(component: string): void {
+        const type = Component.types.get(component);
+        console.log('remove!', type);
+        (&lt;ComponentType&gt;type).list.forEach((element, index, set) =&gt; {
+            if (element.eid === this.id) {
+                set.delete(element);
+            }
+        });
+        this.components.delete(component);
+    }
+    // toJSON(): {[key: string]: any} { }
 }
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -127,7 +214,7 @@ export class Entity {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Sep 27 2017 14:49:49 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 01 2017 01:38:45 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="prettify.js"></script>

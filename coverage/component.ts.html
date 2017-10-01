@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>29/29</span>
+        <span class='fraction'>27/27</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>28/28</span>
+        <span class='fraction'>26/26</span>
       </div>
     </div>
   </div>
@@ -151,8 +151,7 @@
 106
 107
 108
-109
-110</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+109</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,8 +173,8 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -184,7 +183,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -212,8 +211,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -223,23 +222,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -264,7 +262,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
 export interface ComponentType {
     label: string;
-    list: Component[];
+    list: Set&lt;Component&gt;;
     new(...args: any[]): Component;
 }
 &nbsp;
@@ -277,14 +275,14 @@ export interface ComponentType {
  */
 export function ComponentType(label: string) {
     return (constructor: ComponentType) =&gt; {
-        if (ComponentTypes[label] !== undefined) {
+        if (Component.types.has(label)) {
             throw new Error('Attempting to register ' + label + '!');
         }
         constructor.label = label;
-        constructor.list = [];
+        constructor.list = new Set&lt;typeof constructor.prototype&gt;();
         constructor.prototype.label = label;
-        ComponentTypes[label] = constructor;
-        Component.types.set(constructor, constructor.list);
+        // ComponentTypes[label] = constructor;
+        Component.types.set(label, constructor);
     };
 }
 &nbsp;
@@ -293,7 +291,7 @@ export function ComponentType(label: string) {
  *
  * NB: Should only be added to by @ComponentType()!!
  */
-export const ComponentTypes: { [K: string]: ComponentType } = {};
+// export const ComponentTypes: { [K: string]: ComponentType } = {};
 &nbsp;
 /**
  * Core Component class. Is Abstract by itself. Can either be instantiated using
@@ -304,8 +302,8 @@ export const ComponentTypes: { [K: string]: ComponentType } = {};
  * components.
  */
 export abstract class Component {
-    static types: Map&lt;ComponentType, Component[]&gt; = new Map;
-    static list: Component[];
+    static types: Map&lt;string, ComponentType&gt; = new Map;
+    static list: Set&lt;Component&gt;;
     static label: string;
     public label: string;
     /**
@@ -314,12 +312,12 @@ export abstract class Component {
      * typesafety when using this.
      */
     static Builder(label: string): ComponentType {
-        if (ComponentTypes[label]) {
-            return ComponentTypes[label];
+        if (Component.types.has(label)) {
+            return Component.types.get(label) as ComponentType;
         } else {
             @ComponentType(label)
             class GenericComponent extends Component {
-                static list: Component[] = [];
+                static list: Set&lt;GenericComponent&gt; = new Set;
 &nbsp;
                 constructor(public eid: number) {
                     super(eid);
@@ -335,7 +333,7 @@ export abstract class Component {
     constructor(public eid: number) {
         const ctor = Object.getPrototypeOf(this).constructor;
         this.label = ctor.label;
-        ComponentTypes[ctor.label].list.push(this);
+        (&lt;ComponentType&gt;Component.types.get(ctor.label)).list.add(this);
         try {
             this.initialize();
         } catch (e) {
@@ -369,14 +367,13 @@ export abstract class Component {
 //         console.log('test-component-test');
 //     }
 // }
-&nbsp;
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Sep 27 2017 14:49:49 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 01 2017 01:38:45 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="prettify.js"></script>
