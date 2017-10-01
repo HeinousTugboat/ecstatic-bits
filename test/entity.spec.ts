@@ -1,6 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import { Entity } from '../src/entity';
+import { Component, ComponentType } from '../src/component';
 
 describe('Entity', function () {
     it('should exist', function () {
@@ -40,8 +41,47 @@ describe('Entity', function () {
             expect(Entity.list.get(entity.id)).to.deep.equal(entity);
         });
     });
+    describe('get', function () {
+        let entity: Entity;
+        beforeEach(function () {
+            entity = new Entity('Test Entity');
+        });
+        it('should exist', function () {
+            expect(Entity).to.have.property('get');
+            expect(Entity.get).to.be.a('function');
+        });
+        it('should return an array of entities if found by name', function () {
+            expect(Entity.get(entity.name)).to.include(entity);
+        });
+        it('should return an entity by id number', function () {
+            expect(Entity.get(entity.id)).to.be.deep.equal(entity);
+        });
+        it('should return undefined or an empty array if entity doesn\'t exist', function () {
+            expect(Entity.get(-1)).to.be.undefined;
+            expect(Entity.get('')).to.be.empty;
+        });
+    });
+    describe('print', function () {
+        it('should exist', function () {
+            expect(Entity).to.have.property('print');
+            expect(Entity.print).to.be.a('function');
+        });
+        it('should print..', function() {
+            Entity.print();
+            expect(true).to.be.false;
+        });
+    });
     describe('prototype', function () {
         let entity: Entity;
+        // let TestComponent: ComponentType;
+        before(function () {
+            // @ComponentType('test-component')
+            // class TestComponent extends Component {
+            //     constructor(public eid: number) {
+            //         super(eid);
+            //     }
+            // }
+        });
         beforeEach(function () {
             entity = new Entity('Test Entity');
         });
@@ -50,38 +90,57 @@ describe('Entity', function () {
                 expect(entity).to.have.property('add');
                 expect(entity.add).to.be.a('function');
             });
-            it('should add given component');
-            it('should add initialized component');
-            it('should throw an error if no component given');
-            it('should throw an error if component given already on entity');
-            it('TODO: (95)[Unit Tests] Reconsider this test - should add this entity to given component\'s list');
-            it('should work the same as generating a new component via EID');
+            it('should add given component', function () {
+                const component = entity.add('test-component');
+                expect(entity.components.has('test-component')).to.be.true;
+                expect(entity.components.get('test-component')).to.deep.equal(component);
+            });
+            // it('should add initialized component');
+            it('should return an existing component if already on entity', function () {
+                const component = entity.add('test-component');
+                expect(entity.components.has('test-component')).to.be.true;
+                const component2 = entity.add('test-component');
+                expect(component2).to.deep.equal(component);
+            });
+            it('should throw an error if unable to find component type', function () {
+                expect(() => entity.add('fake-component')).to.throw();
+            });
+            // it('TODO: (95)[Unit Tests] Reconsider this test - should add this entity to given component\'s list');
+            // it('should work the same as generating a new component via EID');
         });
-        describe('removeComponent', function () {
+        describe('get', function () {
+            it('should exist', function () {
+                expect(entity).to.have.property('get');
+                expect(entity.get).to.be.a('function');
+            });
+            it('should return the corresponding component', function () {
+                const component = entity.add('test-component');
+                expect(entity.components.has('test-component')).to.be.true;
+                expect(entity.get('test-component')).to.deep.equal(component);
+            });
+        });
+        describe('remove', function () {
             it('should exist', function () {
                 expect(entity).to.have.property('remove');
                 expect(entity.remove).to.be.a('function');
             });
-            it('should remove given component from entity');
-            it('should throw an error if no component given');
-            it('should throw an error if component given not found on entity');
-            it('should remove this entity from given component\'s list');
-        });
-        describe('toJSON', function () {
-            it('should exist', function () {
-                expect(entity).to.have.property('toJSON');
-                expect(entity.toJSON).to.be.a('function');
+            it('should remove given component from entity', function () {
+                const component = entity.add('test-component');
+                expect(entity.components.has('test-component')).to.be.true;
+                entity.remove('test-component');
+                expect(entity.components.has('test-component')).to.be.false;
+                expect(entity.components.get('test-component')).to.be.undefined;
             });
-            it('should return a stringified version of entity');
-            it('should throw an error if unable to serialize');
-            it('should be able to be parsed back from JSON');
-            it('needs a loader function');
         });
-    });
-    describe('findEntity', function () {
-        it('should exist', function () {
-            expect(Entity).to.have.property('find');
-            expect(Entity.find).to.be.a('function');
-        });
+        // describe('toJSON', function () {
+        //     it('should exist', function () {
+        //         expect(entity).to.have.property('toJSON');
+        //         expect(entity.toJSON).to.be.a('function');
+        //     });
+        //     // it('should return a stringified version of entity');
+        //     // it('should throw an error if unable to serialize');
+        //     // it('should be able to be parsed back from JSON');
+        //     // it('needs a loader function');
+        // });
     });
 });
