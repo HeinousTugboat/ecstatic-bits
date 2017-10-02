@@ -1,19 +1,33 @@
 import 'mocha';
 import { expect } from 'chai';
-import ecstaticBits from '../src/ecstatic-bits';
+import EcstaticBits from '../src/ecstatic-bits';
+import { Entity } from '../src/entity';
+import { Component } from '../src/component';
+import { System } from '../src/system';
 
+export function resetECS() {
+    Entity.list.forEach(x => x.components.clear());
+    Entity.list.clear();
+    Component.types.clear();
+    System.list.forEach(x => x.components.clear());
+    System.active.clear();
+    System.list.clear();
+}
+
+afterEach(resetECS);
 describe('base tests', function () {
+    resetECS();
     it('should at least run', function () {
         expect(true).to.be.true;
     });
 });
-describe('ecstatictBits', function () {
+describe('EcstatictBits', function () {
     it('should exist', function () {
-        expect(ecstaticBits).to.exist;
+        expect(EcstaticBits).to.exist;
     });
     it('should be invokable', function () {
-        const bits = new ecstaticBits;
+        const bits = new EcstaticBits;
         expect(bits).to.exist;
-        expect(bits instanceof ecstaticBits).to.be.true;
+        expect(bits instanceof EcstaticBits).to.be.true;
     });
 });
