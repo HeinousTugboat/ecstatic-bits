@@ -25,7 +25,7 @@ export function ComponentType(label: string) {
     };
 }
 
-/**
+/*
  * Register of all component types registered.
  *
  * NB: Should only be added to by @ComponentType()!!
@@ -64,6 +64,9 @@ export abstract class Component {
             }
             return GenericComponent;
         }
+    }
+    static get(label: string): ComponentType | undefined {
+        return Component.types.get(label);
     }
     /**
      * Core Component constructor. Handles all Component creation logic after

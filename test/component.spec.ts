@@ -1,10 +1,24 @@
 import { expect } from 'chai';
 import 'mocha';
+import { resetECS } from './ecstatic-bits.spec';
 import { Component, ComponentType } from '../src/component';
 
 describe('Component', function() {
+    resetECS();
+    afterEach(resetECS);
     it('should exist', function() {
         expect(Component).to.exist;
+    });
+    describe('get', function() {
+        it ('should be identical to Component.types.get', function() {
+            @ComponentType('get-test-component')
+            class GetTestComponent extends Component {
+                constructor(public eid: number) {
+                    super(eid);
+                }
+            }
+            expect(Component.get('get-test-component')).to.deep.equal(Component.types.get('get-test-component'));
+        });
     });
     describe('Builder', function() {
         let BuiltTestComponent: ComponentType;
@@ -38,9 +52,6 @@ describe('Component', function() {
             const str = test.getComponentType();
             expect(str).to.equal('built-test-component');
         });
-        // it('should have a list of all systems it is attached to', function() {
-        //     expect(true).to.be.false;
-        // });
     });
     describe('Class', function() {
         @ComponentType('class-test-component')
@@ -49,9 +60,12 @@ describe('Component', function() {
                 super(eid);
             }
         }
+        beforeEach(function() {
+            ComponentType('class-test-component')(ClassTestComponent);
+        });
 
         it('should be added to Component.list', function() {
-            expect(Component.types.has('test-component')).to.be.true;
+            expect(Component.types.has('class-test-component')).to.be.true;
             expect(Component.types.get('class-test-component')).to.deep.equal(ClassTestComponent.prototype.constructor);
         });
         it('should warn if using default initialize implementation', function() {
@@ -71,18 +85,27 @@ describe('ComponentType', function() {
         initialize() {}
     }
     beforeEach(function() {
+        ComponentType('type-test-component')(TypeTestComponent);
         // TODO: set up Sinon sandbox for ComponentType?
-     });
+    });
+    afterEach(resetECS);
     describe('instance', function() {
-        let component: Component;
-        beforeEach(function() {
-            component = new TypeTestComponent(1);
-        });
+        // let component: Component;
         it('should have an initialize function', function() {
+            const component = new TypeTestComponent(1);
             expect(component.initialize).to.exist;
             expect(component.initialize).to.be.a('Function');
         });
+        it('should have getComponentType()', function() {
+            const component = new TypeTestComponent(1);
+            const str = component.getComponentType();
+            expect(str).to.equal('type-test-component');
+        });
         describe('constructor', function() {
+            let component: TypeTestComponent;
+            beforeEach(function() {
+                component = new TypeTestComponent(1);
+            });
             it('should generate a component instance', function() {
                 expect(component).to.be.instanceof(TypeTestComponent);
             });
@@ -99,17 +122,10 @@ describe('ComponentType', function() {
                     }
                 }).to.throw();
             });
-            // it('should throw an error if unable to locate EID given');
-            // it('should throw an error if component already attached to Entity');
-            // it('should register itself on the EID passed');
             // it('should call its own initialize function when generated', function() {
             //     // TODO: set up Sinon to stub out initialize..
             //     expect(true).to.be.false;
             // });
-        });
-        it('should have getComponentType()', function() {
-            const str = component.getComponentType();
-            expect(str).to.equal('type-test-component');
         });
     });
 });
