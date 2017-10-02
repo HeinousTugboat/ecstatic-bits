@@ -1,9 +1,13 @@
 import 'mocha';
 import { expect } from 'chai';
+import { resetECS } from './ecstatic-bits.spec';
+import * as sinon from 'sinon';
 import { Entity } from '../src/entity';
 import { Component, ComponentType } from '../src/component';
 
 describe('Entity', function () {
+    resetECS();
+    afterEach(resetECS);
     it('should exist', function () {
         expect(Entity).to.exist;
     });
@@ -62,27 +66,38 @@ describe('Entity', function () {
         });
     });
     describe('print', function () {
+        let sandbox: sinon.SinonSandbox;
+        let spy: sinon.SinonSpy;
+        beforeEach(function () {
+            sandbox = sinon.sandbox.create();
+            spy = sandbox.spy(console, 'log');
+        });
+        afterEach(function () {
+            sandbox.restore();
+        });
         it('should exist', function () {
             expect(Entity).to.have.property('print');
             expect(Entity.print).to.be.a('function');
         });
-        it('should print..', function() {
+        it('should print..', function () {
+            const entity2 = new Entity('Test Entity 2');
+            const entity3 = new Entity('Test Entity 3');
             Entity.print();
-            expect(true).to.be.false;
+            expect(spy.called).to.be.true;
         });
     });
     describe('prototype', function () {
         let entity: Entity;
-        // let TestComponent: ComponentType;
-        before(function () {
-            // @ComponentType('test-component')
-            // class TestComponent extends Component {
-            //     constructor(public eid: number) {
-            //         super(eid);
-            //     }
-            // }
-        });
+
+        @ComponentType('test-component')
+        class TestComponent extends Component {
+            constructor(public eid: number) {
+                super(eid);
+            }
+            initialize() { }
+        }
         beforeEach(function () {
+            ComponentType('test-component')(TestComponent);
             entity = new Entity('Test Entity');
         });
         describe('add', function () {
@@ -105,8 +120,6 @@ describe('Entity', function () {
             it('should throw an error if unable to find component type', function () {
                 expect(() => entity.add('fake-component')).to.throw();
             });
-            // it('TODO: (95)[Unit Tests] Reconsider this test - should add this entity to given component\'s list');
-            // it('should work the same as generating a new component via EID');
         });
         describe('get', function () {
             it('should exist', function () {
@@ -130,6 +143,20 @@ describe('Entity', function () {
                 entity.remove('test-component');
                 expect(entity.components.has('test-component')).to.be.false;
                 expect(entity.components.get('test-component')).to.be.undefined;
+            });
+            it('should not remove components from other entities', function () {
+                const entity2 = new Entity('Extra Entity');
+                const component = entity.add('test-component');
+                const component2 = entity2.add('test-component');
+                expect(entity.components.has('test-component')).to.be.true;
+                expect(entity.components.get('test-component')).to.deep.equal(component);
+                expect(entity2.components.has('test-component')).to.be.true;
+                expect(entity2.components.get('test-component')).to.deep.equal(component2);
+                entity.remove('test-component');
+                expect(entity.components.has('test-component')).to.be.false;
+                expect(entity.components.get('test-component')).to.be.undefined;
+                expect(entity2.components.has('test-component')).to.be.true;
+                expect(entity2.components.get('test-component')).to.deep.equal(component2);
             });
         });
         // describe('toJSON', function () {

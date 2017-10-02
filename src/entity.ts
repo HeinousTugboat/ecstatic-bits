@@ -43,7 +43,6 @@ export class Entity {
     }
     remove(component: string): void {
         const type = Component.types.get(component);
-        console.log('remove!', type);
         (<ComponentType>type).list.forEach((element, index, set) => {
             if (element.eid === this.id) {
                 set.delete(element);
