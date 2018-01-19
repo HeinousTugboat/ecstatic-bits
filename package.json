@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "YAECS",
   "main": "lib/ecstatic-bits.js",
+  "typings": "lib/ecstatic-bits",
   "scripts": {
     "test": "nyc mocha",
     "test:vsc": "nyc mocha -R tap test/**/*.ts || @echo off"
@@ -38,6 +39,7 @@
   "homepage": "https://github.com/HeinousTugboat/ecstatic-bits#readme",
   "dependencies": {
     "ts-node": "^3.3.0",
+    "typedoc": "^0.9.0",
     "typescript": "^2.5.3"
   },
   "devDependencies": {

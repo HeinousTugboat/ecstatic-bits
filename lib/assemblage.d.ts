@@ -1,2 +1,2 @@
-export interface Assemblage {
+export declare class Assemblage {
 }
