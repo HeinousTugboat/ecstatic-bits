@@ -6,7 +6,8 @@ export declare class Entity {
     id: number;
     components: Map<string, Component>;
     constructor(name?: string);
-    static get(id: string | number): Entity | undefined | Entity[];
+    static get(id?: string): Entity[];
+    static get(id: number): Entity | undefined;
     static print(): void;
     get(component: string): Component | undefined;
     add(component: string): Component | undefined;

@@ -15,7 +15,10 @@ export class Entity {
         Entity.list.set(this.id, this);
 
     }
-    static get(id: string | number): Entity | undefined | Entity[] {
+    static get(id?: string): Entity[];
+    static get(id: number): Entity | undefined;
+    static get(id: string | number | undefined): Entity | undefined | Entity[] {
+        if (!id) { return []; }
         if (typeof id === 'number') {
             return Entity.list.get(id);
         } else {
