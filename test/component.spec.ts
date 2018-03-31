@@ -13,9 +13,9 @@ describe('Component', function() {
         it ('should be identical to Component.types.get', function() {
             @ComponentType('get-test-component')
             class GetTestComponent extends Component {
-                constructor(public eid: number) {
-                    super(eid);
-                }
+                // constructor(public eid: number) {
+                //     super(eid);
+                // }
             }
             expect(Component.get('get-test-component')).to.deep.equal(Component.types.get('get-test-component'));
         });
@@ -56,9 +56,9 @@ describe('Component', function() {
     describe('Class', function() {
         @ComponentType('class-test-component')
         class ClassTestComponent extends Component {
-            constructor(public eid: number) {
-                super(eid);
-            }
+            // constructor(public eid: number) {
+            //     super(eid);
+            // }
         }
         beforeEach(function() {
             ComponentType('class-test-component')(ClassTestComponent);
@@ -79,9 +79,9 @@ describe('Component', function() {
 describe('ComponentType', function() {
     @ComponentType('type-test-component')
     class TypeTestComponent extends Component {
-        constructor(public eid: number) {
-            super(eid);
-        }
+        // constructor(public eid: number) {
+        //     super(eid);
+        // }
         initialize() {}
     }
     beforeEach(function() {

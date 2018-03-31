@@ -91,9 +91,9 @@ describe('Entity', function () {
 
         @ComponentType('test-component')
         class TestComponent extends Component {
-            constructor(public eid: number) {
-                super(eid);
-            }
+            // constructor(public eid: number) {
+            //     super(eid);
+            // }
             initialize() { }
         }
         beforeEach(function () {

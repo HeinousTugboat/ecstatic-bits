@@ -12,17 +12,17 @@ describe('System', function () {
     console.log(Component.types);
     @ComponentType('test-component')
     class TestComponent extends Component {
-        constructor(public eid: number) {
-            super(eid);
-        }
+        // constructor(public eid: number) {
+        //     super(eid);
+        // }
         initialize() { }
     }
 
     @ComponentType('test-component-2')
     class TestComponent2 extends Component {
-        constructor(public eid: number) {
-            super(eid);
-        }
+        // constructor(public eid: number) {
+        //     super(eid);
+        // }
         initialize() { }
     }
     beforeEach(function () {
