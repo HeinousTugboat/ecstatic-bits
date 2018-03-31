@@ -8,7 +8,7 @@ export interface ComponentType {
 /**
  * Component Class Decorator
  *
- * Attaches class it decorates to CompnentTypes, checks for duplicate component
+ * Attaches class it decorates to ComponentTypes, checks for duplicate component
  * labels, and sets component's label. Overloads the ComponentType Interface as
  * well.
  */
