@@ -112,8 +112,8 @@ describe('ComponentType', function() {
             it('should register itself on ComponentType.list', function() {
                 expect(TypeTestComponent.list).to.include(component);
             });
-            it('should throw an error if duplicate component found', function(){
-                expect(function(){
+            it('should throw an error if duplicate component found', function() {
+                expect(function() {
                     @ComponentType('type-test-component')
                     class TestComponentNew extends Component {
                         constructor(eid: number) {
