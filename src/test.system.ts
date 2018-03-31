@@ -5,8 +5,8 @@ import { System } from './system';
 @ComponentType('active')
 class ActiveComponent extends Component {
     static primary: Entity | undefined;
-    private delay: number;
-    private command: {execute: (...args: any[]) => {}};
+    private delay: number | undefined;
+    private command: {execute: (...args: any[]) => {}} | undefined;
     constructor(eid: number) {
         super(eid);
     }
