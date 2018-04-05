@@ -7,13 +7,13 @@ export declare class System {
     hooks: {
         [k: string]: Function;
     };
-    components: Map<string, ComponentType>;
-    constructor(label: string, components: ComponentType | ComponentType[], active?: boolean);
+    components: Map<string, ComponentType<any>>;
+    constructor(label: string, components: ComponentType<any> | ComponentType<any>[], active?: boolean);
     static update(elapsedTime: number): void;
     static tick(): void;
     update(elapsedTime: number): void;
     tick(): void;
     execute(command: string, ...args: any[]): any;
-    register(component: ComponentType): void;
-    deregister(component: ComponentType): void;
+    register(component: ComponentType<any>): void;
+    deregister(component: ComponentType<any>): void;
 }

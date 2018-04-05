@@ -1,18 +1,25 @@
-export interface ComponentType {
+export interface ComponentType<T extends Component> {
     label: string;
-    list: Set<Component>;
-    new (...args: any[]): Component;
+    list: Set<T>;
+    new (...args: any[]): T;
 }
-export declare function ComponentType(label: string): (constructor: ComponentType) => void;
+export declare type ComponentData<T extends Component> = {
+    [K in keyof T]?: T[K];
+};
+export declare function RegisterComponent(label: string): <T extends Component>(constructor: {
+    new (...args: any[]): T;
+    label: string;
+    list: Set<T>;
+}) => void;
 export declare abstract class Component {
     eid: number;
-    static types: Map<string, ComponentType>;
+    static types: Map<string, {
+        label: string;
+        new (...args: any[]): Component;
+    }>;
     static list: Set<Component>;
     static label: string;
     label: string;
-    static Builder(label: string): ComponentType;
-    static get(label: string): ComponentType | undefined;
+    static get(label: string): ComponentType<Component>;
     constructor(eid: number);
-    initialize(): void;
-    getComponentType(): string;
 }

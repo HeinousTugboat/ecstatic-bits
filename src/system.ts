@@ -4,10 +4,10 @@ export class System /* implements ISystem */ {
     static active: Set<System> = new Set;
     static list: Map<string, System> = new Map;
     public hooks: { [k: string]: Function } = {};
-    public components: Map<string, ComponentType> = new Map;
+    public components: Map<string, ComponentType<any>> = new Map;
 
     constructor(public label: string,
-        components: ComponentType | ComponentType[],
+        components: ComponentType<any> | ComponentType<any>[],
         private active: boolean = true) {
         if (active) {
             System.active.add(this);
@@ -35,10 +35,10 @@ export class System /* implements ISystem */ {
     execute(command: string, ...args: any[]) {
         return this.hooks[command] && this.hooks[command].apply(this, args);
     }
-    register(component: ComponentType) {
+    register(component: ComponentType<any>) {
         this.components.set(component.label, component);
     }
-    deregister(component: ComponentType) {
+    deregister(component: ComponentType<any>) {
         this.components.delete(component.label);
     }
 }
