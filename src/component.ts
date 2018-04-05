@@ -1,9 +1,13 @@
 
-export interface ComponentType {
+export interface ComponentType<T extends Component> {
     label: string;
-    list: Set<Component>;
-    new(...args: any[]): Component;
+    list: Set<T>;
+    new(...args: any[]): T;
 }
+
+export type ComponentData<T extends Component> = {
+    [K in keyof T]?: T[K];
+};
 
 /**
  * Component Class Decorator
@@ -12,8 +16,8 @@ export interface ComponentType {
  * labels, and sets component's label. Overloads the ComponentType Interface as
  * well.
  */
-export function ComponentType(label: string) {
-    return (constructor: ComponentType) => {
+export function RegisterComponent(label: string) {
+    return <T extends Component>(constructor: {label: string; list: Set<T>; new(...args: any[]): T}) => {
         if (Component.types.has(label)) {
             throw new Error('Attempting to register ' + label + '!');
         }
@@ -41,32 +45,13 @@ export function ComponentType(label: string) {
  * components.
  */
 export abstract class Component {
-    static types: Map<string, ComponentType> = new Map;
+    static types: Map<string, {label: string; new(...args: any[]): Component}> = new Map;
     static list: Set<Component>;
     static label: string;
     public label: string;
-    /**
-     * One of two methods for instantiating Component Types. If Component
-     * already registered, will instead return its constructor. No guaranteed
-     * typesafety when using this.
-     */
-    static Builder(label: string): ComponentType {
-        if (Component.types.has(label)) {
-            return Component.types.get(label) as ComponentType;
-        } else {
-            @ComponentType(label)
-            class GenericComponent extends Component {
-                static list: Set<GenericComponent> = new Set;
 
-                constructor(public eid: number) {
-                    super(eid);
-                }
-            }
-            return GenericComponent;
-        }
-    }
-    static get(label: string): ComponentType | undefined {
-        return Component.types.get(label);
+    static get(label: string): ComponentType<Component> {
+        return Component.types.get(label) as ComponentType<Component>;
     }
     /**
      * Core Component constructor. Handles all Component creation logic after
@@ -75,26 +60,15 @@ export abstract class Component {
     constructor(public eid: number) {
         const ctor = Object.getPrototypeOf(this).constructor;
         this.label = ctor.label;
-        (<ComponentType>Component.types.get(ctor.label)).list.add(this);
-        try {
-            this.initialize();
-        } catch (e) {
-            console.error('Component Initialize errored out: ', e.message);
-        }
+        (<ComponentType<Component>>Component.types.get(ctor.label)).list.add(this);
     }
 
-    initialize(): void {
-        throw new Error('Unimplemented initialization function! ' + this.label);
-    }
-    getComponentType(): string {
-        return this.label;
-    }
 }
 // /**
 //  * Test Component Class!
 //  * Leaving this here for posterity, so we can see how we can document actual Components.
 //  */
-// @ComponentType('test-component')
+// @RegisterComponent('test-component')
 // class TestComponent extends Component {
 //     /**
 //      * Component Constructor, whoa!

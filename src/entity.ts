@@ -1,4 +1,4 @@
-import { Component, ComponentType } from './component';
+import { Component, ComponentType, ComponentData } from './component';
 
 /**
  * Basic Entity. It's just a number.
@@ -29,29 +29,26 @@ export class Entity {
         console.log('Full Entity List [' + Entity.list.size + ']: ');
         [...Entity.list.values()].forEach((x) => { console.log(x); });
     }
-    get(component: string): Component | undefined {
-        return this.components.get(component);
+    get<T extends Component>(component: {label: string; new(...args: any[]): T}): T {
+        return this.components.get(component.label) as T;
     }
-    add(component: string): Component | undefined {
-        if (this.components.has(component)) {
+    add<T extends Component>(component: {label: string; new(...args: any[]): T}, data?: ComponentData<T>): T {
+        if (this.components.has(component.label)) {
             return this.get(component);
         }
-        const componentType = Component.types.get(component);
-        if (!componentType || componentType === undefined) {
-            throw new Error('Unable to locate Component Type: ' + component);
-        }
-        const newComponent = new componentType(this.id);
-        this.components.set(component, newComponent);
+
+        const newComponent = new component(this.id, data);
+        this.components.set(component.label, newComponent);
         return newComponent;
     }
-    remove(component: string): void {
-        const type = Component.types.get(component);
-        (<ComponentType>type).list.forEach((element, index, set) => {
+    remove<T extends Component>(component: {label: string; new(...args: any[]): T}): void {
+        const type = Component.types.get(component.label);
+        (<ComponentType<T>>type).list.forEach((element, index, set) => {
             if (element.eid === this.id) {
                 set.delete(element);
             }
         });
-        this.components.delete(component);
+        this.components.delete(component.label);
     }
     // toJSON(): {[key: string]: any} { }
 }

@@ -3,14 +3,14 @@ import 'mocha';
 import * as sinon from 'sinon';
 import { resetECS } from './ecstatic-bits.spec';
 import { System } from '../src/system';
-import { Component, ComponentType } from '../src/component';
+import { Component, ComponentType, RegisterComponent } from '../src/component';
 
 describe('System', function () {
     resetECS();
     // let sandbox: sinon.SinonSandbox;
 
-    console.log(Component.types);
-    @ComponentType('test-component')
+    // console.log(Component.types);
+    @RegisterComponent('test-component')
     class TestComponent extends Component {
         // constructor(public eid: number) {
         //     super(eid);
@@ -18,7 +18,7 @@ describe('System', function () {
         initialize() { }
     }
 
-    @ComponentType('test-component-2')
+    @RegisterComponent('test-component-2')
     class TestComponent2 extends Component {
         // constructor(public eid: number) {
         //     super(eid);
@@ -26,8 +26,8 @@ describe('System', function () {
         initialize() { }
     }
     beforeEach(function () {
-        ComponentType('test-component')(TestComponent);
-        ComponentType('test-component-2')(TestComponent2);
+        RegisterComponent('test-component')(TestComponent);
+        RegisterComponent('test-component-2')(TestComponent2);
     });
 
     afterEach(function () {
@@ -186,9 +186,11 @@ describe('System', function () {
                 expect(testSystem.register).to.be.a('Function');
             });
             it('should add given component to this system\'s components map', function() {
-                const RegisterComponent = Component.Builder('register-component');
+                // const RegisteredComponent = Component.Builder('register-component');
+                @RegisterComponent('register-component')
+                class RegisteredComponent extends Component { }
                 expect(testSystem.components.has('register-component')).to.be.false;
-                testSystem.register(RegisterComponent);
+                testSystem.register(RegisteredComponent);
                 expect(testSystem.components.has('register-component')).to.be.true;
             });
         });
@@ -198,11 +200,13 @@ describe('System', function () {
                 expect(testSystem.deregister).to.be.a('Function');
             });
             it('should remove given component from this system', function() {
-                const RegisterComponent = Component.Builder('register-component');
-                testSystem.register(RegisterComponent);
-                expect(testSystem.components.has('register-component')).to.be.true;
-                testSystem.deregister(RegisterComponent);
-                expect(testSystem.components.has('register-component')).to.be.false;
+                // const RegisterComponent = Component.Builder('register-component');
+                @RegisterComponent('deregister-component')
+                class DeregisteredComponent extends Component { }
+                testSystem.register(DeregisteredComponent);
+                expect(testSystem.components.has('deregister-component')).to.be.true;
+                testSystem.deregister(DeregisteredComponent);
+                expect(testSystem.components.has('deregister-component')).to.be.false;
             });
         });
     });
