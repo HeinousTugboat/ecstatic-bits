@@ -38,11 +38,7 @@
     "url": "https://github.com/HeinousTugboat/ecstatic-bits/issues"
   },
   "homepage": "https://github.com/HeinousTugboat/ecstatic-bits#readme",
-  "dependencies": {
-    "ts-node": "^3.3.0",
-    "typedoc": "^0.9.0",
-    "typescript": "^2.5.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
@@ -54,7 +50,10 @@
     "mocha": "^3.5.3",
     "nyc": "^11.2.1",
     "sinon": "^2.3.5",
-    "source-map-support": "^0.4.18"
+    "source-map-support": "^0.4.18",
+    "ts-node": "^3.3.0",
+    "typedoc": "^0.9.0",
+    "typescript": "^2.8.1"
   },
   "config": {
     "commitizen": {
