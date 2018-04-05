@@ -1,6 +1,6 @@
 {
   "name": "ecstatic-bits",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "YAECS",
   "main": "lib/ecstatic-bits.js",
   "typings": "lib/ecstatic-bits.d.ts",
