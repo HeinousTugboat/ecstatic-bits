@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "YAECS",
   "main": "lib/ecstatic-bits.js",
-  "typings": "lib/ecstatic-bits",
+  "typings": "lib/ecstatic-bits.d.ts",
   "scripts": {
+    "docs": "typedoc --out docs --mode file src/ecstatic-bits.ts",
     "test": "nyc mocha",
     "test:vsc": "nyc mocha -R tap test/**/*.ts || @echo off"
   },
