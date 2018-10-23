@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { resetECS } from './ecstatic-bits.spec';
 import * as sinon from 'sinon';
 import { Entity } from '../src/entity';
-import { Component, ComponentType, RegisterComponent } from '../src/component';
+import { Component, ComponentType } from '../src/component';
 
 describe('Entity', function () {
     resetECS();
@@ -40,9 +40,9 @@ describe('Entity', function () {
             const entity = new Entity;
             expect(entity).to.have.property('components');
         });
-        it('should be added to Entity.list', function () {
+        it('should be added to Entity.map', function () {
             const entity = new Entity;
-            expect(Entity.list.get(entity.id)).to.deep.equal(entity);
+            expect(Entity.map.get(entity.id)).to.deep.equal(entity);
         });
     });
     describe('get', function () {
@@ -89,11 +89,11 @@ describe('Entity', function () {
     describe('prototype', function () {
         let entity: Entity;
 
-        @RegisterComponent('test-component')
+        // @RegisterComponent('test-component')
         class TestComponent extends Component {
         }
         beforeEach(function () {
-            RegisterComponent('test-component')(TestComponent);
+            // RegisterComponent('test-component')(TestComponent);
             entity = new Entity('Test Entity');
         });
         describe('add', function () {
@@ -103,13 +103,13 @@ describe('Entity', function () {
             });
             it('should add given component', function () {
                 const component = entity.add(TestComponent);
-                expect(entity.components.has('test-component')).to.be.true;
-                expect(entity.components.get('test-component')).to.deep.equal(component);
+                expect(entity.components.has('TestComponent')).to.be.true;
+                expect(entity.components.get('TestComponent')).to.deep.equal(component);
             });
             // it('should add initialized component');
             it('should return an existing component if already on entity', function () {
                 const component = entity.add(TestComponent);
-                expect(entity.components.has('test-component')).to.be.true;
+                expect(entity.components.has('TestComponent')).to.be.true;
                 const component2 = entity.add(TestComponent);
                 expect(component2).to.deep.equal(component);
             });
@@ -124,7 +124,7 @@ describe('Entity', function () {
             });
             it('should return the corresponding component', function () {
                 const component = entity.add(TestComponent);
-                expect(entity.components.has('test-component')).to.be.true;
+                expect(entity.components.has('TestComponent')).to.be.true;
                 expect(entity.get(TestComponent)).to.deep.equal(component);
             });
         });
@@ -135,24 +135,24 @@ describe('Entity', function () {
             });
             it('should remove given component from entity', function () {
                 const component = entity.add(TestComponent);
-                expect(entity.components.has('test-component')).to.be.true;
+                expect(entity.components.has('TestComponent')).to.be.true;
                 entity.remove(TestComponent);
-                expect(entity.components.has('test-component')).to.be.false;
-                expect(entity.components.get('test-component')).to.be.undefined;
+                expect(entity.components.has('TestComponent')).to.be.false;
+                expect(entity.components.get('TestComponent')).to.be.undefined;
             });
             it('should not remove components from other entities', function () {
                 const entity2 = new Entity('Extra Entity');
                 const component = entity.add(TestComponent);
                 const component2 = entity2.add(TestComponent);
-                expect(entity.components.has('test-component')).to.be.true;
-                expect(entity.components.get('test-component')).to.deep.equal(component);
-                expect(entity2.components.has('test-component')).to.be.true;
-                expect(entity2.components.get('test-component')).to.deep.equal(component2);
+                expect(entity.components.has('TestComponent')).to.be.true;
+                expect(entity.components.get('TestComponent')).to.deep.equal(component);
+                expect(entity2.components.has('TestComponent')).to.be.true;
+                expect(entity2.components.get('TestComponent')).to.deep.equal(component2);
                 entity.remove(TestComponent);
-                expect(entity.components.has('test-component')).to.be.false;
-                expect(entity.components.get('test-component')).to.be.undefined;
-                expect(entity2.components.has('test-component')).to.be.true;
-                expect(entity2.components.get('test-component')).to.deep.equal(component2);
+                expect(entity.components.has('TestComponent')).to.be.false;
+                expect(entity.components.get('TestComponent')).to.be.undefined;
+                expect(entity2.components.has('TestComponent')).to.be.true;
+                expect(entity2.components.get('TestComponent')).to.deep.equal(component2);
             });
         });
         // describe('toJSON', function () {

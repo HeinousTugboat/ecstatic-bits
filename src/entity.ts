@@ -1,54 +1,53 @@
-import { Component, ComponentType, ComponentData } from './component';
+import { Subject } from 'rxjs';
+import { ComponentType, Component } from './component';
+import { invalid } from './utilities';
 
-/**
- * Basic Entity. It's just a number.
- */
+export function isEntity(e: Entity | undefined): e is Entity {
+  return isFinite((<Entity>e).id) && (<Entity>e).components !== undefined;
+}
 
 export class Entity {
-    static id = 1000;
-    static list: Map<number, Entity> = new Map;
-    id: number;
-    components: Map<string, Component> = new Map;
+  static nextId = 1;
+  static added$ = new Subject<Entity>();
+  static map = new Map<number, Entity>();
+  id = Entity.nextId++;
+  components = new Map<string, Component>();
 
-    constructor(public name: string = 'Unnamed Entity') {
-        this.id = Entity.id++;
-        Entity.list.set(this.id, this);
+  constructor(public name: string = 'Unnamed Entity') {
+    Entity.added$.next(this);
+    Entity.map.set(this.id, this);
+  }
 
+  static get(id?: string): Entity[];
+  static get(id: number): Entity | undefined;
+  static get(id: string | number | undefined): Entity | undefined | Entity[] {
+    if (!id) { return []; }
+    if (typeof id === 'number') {
+      return Entity.map.get(id);
+    } else {
+      return [...Entity.map.values()].filter((val: Entity) => val.name === id);
     }
-    static get(id?: string): Entity[];
-    static get(id: number): Entity | undefined;
-    static get(id: string | number | undefined): Entity | undefined | Entity[] {
-        if (!id) { return []; }
-        if (typeof id === 'number') {
-            return Entity.list.get(id);
-        } else {
-            return [...Entity.list.values()].filter((val: Entity) => val.name === id);
-        }
-    }
-    static print(): void {
-        console.log('Full Entity List [' + Entity.list.size + ']: ');
-        [...Entity.list.values()].forEach((x) => { console.log(x); });
-    }
-    get<T extends Component>(component: {label: string; new(...args: any[]): T}): T {
-        return this.components.get(component.label) as T;
-    }
-    add<T extends Component>(component: {label: string; new(...args: any[]): T}, data?: ComponentData<T>): T {
-        if (this.components.has(component.label)) {
-            return this.get(component);
-        }
+  }
 
-        const newComponent = new component(this.id, data);
-        this.components.set(component.label, newComponent);
-        return newComponent;
+  static print(): void {
+    console.log('Full Entity List [' + Entity.map.size + ']: ');
+    [...Entity.map.values()].forEach((x) => { console.log(x); });
+  }
+
+  get<T extends Component>(component: ComponentType<T>): T | undefined {
+    return this.components.get(component.name) as T | undefined;
+  }
+
+  add<T extends Component>(component: ComponentType<T>): T {
+    return new component(this.id);
+  }
+
+  remove<T extends Component>(component: ComponentType<T>): void {
+    const componentInstance = this.components.get(component.name) as T;
+    if (!invalid(componentInstance)) {
+      componentInstance.destroy();
     }
-    remove<T extends Component>(component: {label: string; new(...args: any[]): T}): void {
-        const type = Component.types.get(component.label);
-        (<ComponentType<T>>type).list.forEach((element, index, set) => {
-            if (element.eid === this.id) {
-                set.delete(element);
-            }
-        });
-        this.components.delete(component.label);
-    }
-    // toJSON(): {[key: string]: any} { }
+  }
+
+  // toJSON(): {[key: string]: any} { }
 }

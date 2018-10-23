@@ -6,10 +6,10 @@ import { Component } from '../src/component';
 import { System } from '../src/system';
 
 export function resetECS() {
-    Entity.list.forEach(x => x.components.clear());
-    Entity.list.clear();
-    Component.types.clear();
-    System.list.forEach(x => x.components.clear());
+    Entity.map.forEach(x => x.components.clear());
+    Entity.map.clear();
+    // Component.types.clear();
+    // System.list.forEach(x => x.components.clear());
     System.active.clear();
     System.list.clear();
 }
