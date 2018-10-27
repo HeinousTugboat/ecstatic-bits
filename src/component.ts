@@ -3,12 +3,29 @@ import { Subject } from 'rxjs';
 import { Entity } from './entity';
 import { invalid } from './utilities';
 
+/**
+ * ComponentType thing!
+ */
 export type ComponentType<T extends Component> = new (id: number) => T;
 
+/**
+ * Component
+ */
 export class Component {
+  /**
+   * Added$  of component
+   */
   static added$ = new Subject<Component>();
-  static removed$ = new Subject<Component>();
 
+  /**
+   * Removed$  of component
+   */
+    static removed$ = new Subject<Component>();
+
+  /**
+   * Creates an instance of component.
+   * @param entityId
+   */
   constructor(public readonly entityId: number) {
     const entity = Entity.map.get(this.entityId);
     if (invalid(entity)) {
@@ -19,6 +36,9 @@ export class Component {
     Component.added$.next(this);
   }
 
+  /**
+   * Destroys component
+   */
   destroy() {
     const entity = Entity.map.get(this.entityId);
     if (invalid(entity)) {

@@ -15,6 +15,9 @@ import { Entity } from './entity';
 //     killEntity(entity: Entity): void;
 // }
 
+/**
+ * Entity manager
+ */
 export class EntityManager /* implements IEntityManager */ {
 
 }
