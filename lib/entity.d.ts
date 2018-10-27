@@ -1,24 +1,19 @@
-import { Component, ComponentData } from './component';
+import { Subject } from 'rxjs';
+import { Component, ComponentType } from './component';
+export declare function isEntity(e: Entity | undefined): e is Entity;
 export declare class Entity {
     name: string;
-    static id: number;
-    static list: Map<number, Entity>;
+    static nextId: number;
+    static added$: Subject<Entity>;
+    static map: Map<number, Entity>;
     id: number;
     components: Map<string, Component>;
     constructor(name?: string);
     static get(id?: string): Entity[];
     static get(id: number): Entity | undefined;
     static print(): void;
-    get<T extends Component>(component: {
-        label: string;
-        new (...args: any[]): T;
-    }): T;
-    add<T extends Component>(component: {
-        label: string;
-        new (...args: any[]): T;
-    }, data?: ComponentData<T>): T;
-    remove<T extends Component>(component: {
-        label: string;
-        new (...args: any[]): T;
-    }): void;
+    get<T extends Component>(component: ComponentType<T>): T | undefined;
+    add<T extends Component>(component: ComponentType<T>): T;
+    remove<T extends Component>(component: ComponentType<T>): void;
+    toJSON(): string;
 }
