@@ -1,31 +1,33 @@
-import 'mocha';
 import { expect } from 'chai';
+import 'mocha';
+import { Subject } from 'rxjs';
+
+import { Component } from '../src/component';
 import EcstaticBits from '../src/ecstatic-bits';
 import { Entity } from '../src/entity';
-import { Component } from '../src/component';
 import { System } from '../src/system';
 
-export function resetECS() {
+afterEach(() => {
     Entity.map.forEach(x => x.components.clear());
     Entity.map.clear();
-    // Component.types.clear();
-    // System.list.forEach(x => x.components.clear());
+    Component.added$ = new Subject<Component>();
+    Component.removed$ = new Subject<Component>();
     System.active.clear();
     System.list.clear();
-}
-
-afterEach(resetECS);
-describe('base tests', function () {
-    resetECS();
-    it('should at least run', function () {
-        expect(true).to.be.true;
-    });
 });
-describe('EcstatictBits', function () {
-    it('should exist', function () {
+
+describe('EcstatictBits', () => {
+    describe('base tests', () => {
+        it('should at least run', () => {
+            expect(true).to.be.true;
+        });
+    });
+
+    it('should exist', () => {
         expect(EcstaticBits).to.exist;
     });
-    it('should be invokable', function () {
+
+    it('should be invokable', () => {
         const bits = new EcstaticBits;
         expect(bits).to.exist;
         expect(bits instanceof EcstaticBits).to.be.true;

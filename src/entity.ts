@@ -1,9 +1,10 @@
 import { Subject } from 'rxjs';
-import { ComponentType, Component } from './component';
+
+import { Component, ComponentType } from './component';
 import { invalid } from './utilities';
 
 export function isEntity(e: Entity | undefined): e is Entity {
-  return isFinite((<Entity>e).id) && (<Entity>e).components !== undefined;
+  return !invalid(e) && isFinite((<Entity> e).id) && (<Entity> e).components !== undefined;
 }
 
 export class Entity {
@@ -31,7 +32,7 @@ export class Entity {
 
   static print(): void {
     console.log('Full Entity List [' + Entity.map.size + ']: ');
-    [...Entity.map.values()].forEach((x) => { console.log(x); });
+    [...Entity.map.values()].forEach(x => { console.log(x); });
   }
 
   get<T extends Component>(component: ComponentType<T>): T | undefined {
@@ -49,5 +50,5 @@ export class Entity {
     }
   }
 
-  // toJSON(): {[key: string]: any} { }
+  toJSON(): string { return ''; }
 }

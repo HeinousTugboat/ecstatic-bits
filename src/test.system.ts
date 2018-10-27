@@ -42,9 +42,9 @@ class InputSystem extends System<InputComponents> {
 }
 
 const input = new InputSystem();
-const Joe = new Entity('Joe Book');
-const JoeActive = Joe.add(ActiveComponent);
+const joe = new Entity('Joe Book');
+const joeActive = joe.add(ActiveComponent);
 
 System.tick(1);
-JoeActive.makePrimary();
+joeActive.makePrimary();
 console.log(ActiveComponent.primary);

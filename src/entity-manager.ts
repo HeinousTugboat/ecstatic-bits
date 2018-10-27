@@ -1,5 +1,5 @@
-import { Entity } from './entity';
 import { Component, ComponentType } from './component';
+import { Entity } from './entity';
 
 /**
  * The thing that actually runs Entities..

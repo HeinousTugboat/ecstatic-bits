@@ -1,13 +1,17 @@
+import { filter, map } from 'rxjs/operators';
 
 import { Component, ComponentType } from './component';
-import { filter, map } from 'rxjs/operators';
 import { Entity, isEntity } from './entity';
 
 let enComponents: string[];
 
 export type ComponentTypes<T extends Component[]> = { [K in keyof T]: ComponentType<T[K] extends Component ? T[K] : never> };
 
+const FRAME_LENGTH = 10;
+const FRAME_PAD = 2;
+
 export class System<T extends Component[]> {
+  static readonly debug = false;
   static list: Map<string, System<any>> = new Map;
   static active: Set<System<any>> = new Set;
   static frame = 1;
@@ -37,6 +41,7 @@ export class System<T extends Component[]> {
       filter(isEntity),
       filter(entity => {
         enComponents = [...entity.components.keys()];
+
         return components
           .map(systemComponent => systemComponent.name)
           .every(systemComponent => enComponents.includes(systemComponent));
@@ -64,7 +69,9 @@ export class System<T extends Component[]> {
   }
 
   protected update(components: T, dT: number): void {
-    console.log(`[${System.frame.toString(10).padStart(2)}] ${this.label}: ${components} `, dT);
+    if (System.debug) {
+      console.log(`[${System.frame.toString(FRAME_LENGTH).padStart(FRAME_PAD)}] ${this.label}: ${components} `, dT);
+    }
   }
 
   execute(command: string, ...args: any[]): unknown {
