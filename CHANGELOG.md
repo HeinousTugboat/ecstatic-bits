@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/HeinousTugboat/ecstatic-bits/compare/v2.0.1...v3.0.0) (2018-10-27)
+
+
+### Bug Fixes
+
+* removes strictPropInit and formats tsconfig ([291a0e2](https://github.com/HeinousTugboat/ecstatic-bits/commit/291a0e2))
+
+
+### Features
+
+* overhauls components, systems, and entities with new strategy ([2b31c22](https://github.com/HeinousTugboat/ecstatic-bits/commit/2b31c22))
+* rewrites majority of code using new style for Systems ([6e08194](https://github.com/HeinousTugboat/ecstatic-bits/commit/6e08194))
+
+
+### BREAKING CHANGES
+
+* Major reworking of how components and systems are built
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/HeinousTugboat/ecstatic-bits/compare/v2.0.0...v2.0.1) (2018-04-05)
 
