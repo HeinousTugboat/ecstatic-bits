@@ -1,91 +1,83 @@
 import { expect } from 'chai';
 import 'mocha';
-import { resetECS } from './ecstatic-bits.spec';
-import { Component, ComponentType, RegisterComponent } from '../src/component';
+import { stub } from 'sinon';
 
-describe('Component', function() {
-    resetECS();
-    afterEach(resetECS);
-    it('should exist', function() {
-        expect(Component).to.exist;
-    });
-    describe('get', function() {
-        it ('should be identical to Component.types.get', function() {
-            @RegisterComponent('get-test-component')
-            class GetTestComponent extends Component {
-            }
-            expect(Component.get('get-test-component')).to.deep.equal(Component.types.get('get-test-component'));
-        });
-    });
-    describe('Class', function() {
-        @RegisterComponent('class-test-component')
-        class ClassTestComponent extends Component {
-            // constructor(public eid: number) {
-            //     super(eid);
-            // }
-        }
-        beforeEach(function() {
-            RegisterComponent('class-test-component')(ClassTestComponent);
-        });
+import { Component } from '../src/component';
+import { Entity } from '../src/entity';
 
-        it('should be added to Component.list', function() {
-            expect(Component.types.has('class-test-component')).to.be.true;
-            expect(Component.types.get('class-test-component')).to.deep.equal(ClassTestComponent.prototype.constructor);
-        });
-        xit('should warn if using default initialize implementation', function() {
-            const component = new ClassTestComponent(3);
-            expect(function() {
-                // component.initialize();
-            }).to.throw();
-        });
+describe('Component', () => {
+  class TestComponent extends Component { }
+
+  it('should exist', () => {
+    expect(Component).to.exist;
+    expect(Component.added$).to.exist;
+    expect(Component.removed$).to.exist;
+  });
+
+  describe('constructor', () => {
+    it('should add itself to entity passed in', () => {
+      const entity = new Entity();
+      const component = new TestComponent(entity.id);
+
+      expect(component).to.exist;
+      expect(component.entityId).to.equal(entity.id);
+      expect(entity.components.has('TestComponent')).to.be.true;
+      expect(entity.components.get('TestComponent')).to.equal(component);
     });
-});
-describe('RegisterComponent', function() {
-    @RegisterComponent('type-test-component')
-    class TypeTestComponent extends Component {
-    }
-    beforeEach(function() {
-        RegisterComponent('type-test-component')(TypeTestComponent);
-        // TODO: set up Sinon sandbox for ComponentType?
+
+    it('should throw an error if bad entity passed in', () => {
+      expect(() => new TestComponent(-1)).to.throw(Error);
     });
-    afterEach(resetECS);
-    describe('instance', function() {
-        // let component: Component;
-        xit('should have an initialize function', function() {
-            const component = new TypeTestComponent(1);
-            // expect(component.initialize).to.exist;
-            // expect(component.initialize).to.be.a('Function');
-        });
-        xit('should have getComponentType()', function() {
-            const component = new TypeTestComponent(1);
-            // const str = component.getComponentType();
-            // expect(str).to.equal('type-test-component');
-        });
-        describe('constructor', function() {
-            let component: TypeTestComponent;
-            beforeEach(function() {
-                component = new TypeTestComponent(1);
-            });
-            it('should generate a component instance', function() {
-                expect(component).to.be.instanceof(TypeTestComponent);
-            });
-            it('should register itself on ComponentType.list', function() {
-                expect(TypeTestComponent.list).to.include(component);
-            });
-            it('should throw an error if duplicate component found', function() {
-                expect(function() {
-                    @RegisterComponent('type-test-component')
-                    class TestComponentNew extends Component {
-                        constructor(eid: number) {
-                            super(eid);
-                        }
-                    }
-                }).to.throw();
-            });
-            // it('should call its own initialize function when generated', function() {
-            //     // TODO: set up Sinon to stub out initialize..
-            //     expect(true).to.be.false;
-            // });
-        });
+  });
+
+  describe('prototype', () => {
+    describe('destroy', () => {
+      it('should remove Component from Entity', () => {
+        const entity = new Entity();
+        const component = new TestComponent(entity.id);
+
+        expect(entity.components.has('TestComponent')).to.be.true;
+        expect(entity.components.get('TestComponent')).to.equal(component);
+        component.destroy();
+
+        expect(entity.components.has('TestComponent')).to.be.false;
+        expect(entity.components.get('TestComponent')).not.to.exist;
+      });
+
+      it('should throw an error if bad Entity', () => {
+        const entity = new Entity();
+        const component = new TestComponent(entity.id);
+
+        Entity.map.delete(entity.id);
+        expect(() => component.destroy()).to.throw(Error);
+      });
     });
+  });
+
+  describe('added$', () => {
+    it('should pass Component to all subscribers when added', () => {
+      const entity = new Entity();
+      const rxStub = stub();
+
+      Component.added$.subscribe(rxStub);
+      const component = new TestComponent(entity.id);
+
+      expect(rxStub.calledOnce).to.be.true;
+      expect(rxStub.calledWithExactly(component)).to.be.true;
+    });
+  });
+
+  describe('removed$', () => {
+    it('should pass Component to all subscribers when destroyed', () => {
+      const entity = new Entity();
+      const rxStub = stub();
+
+      Component.removed$.subscribe(rxStub);
+      const component = new TestComponent(entity.id);
+      component.destroy();
+
+      expect(rxStub.calledOnce).to.be.true;
+      expect(rxStub.calledWithExactly(component)).to.be.true;
+    });
+  });
 });

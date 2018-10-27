@@ -77,8 +77,7 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td><code>EcstaticBits</code></td>
 							<td>Base class, contains all other classes.</td>
 						</tr>
@@ -106,8 +105,7 @@
 							<td><code>Entity Manager</code></td>
 							<td>Manages, instantiates and keeps track of Entities.</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<h3 id="entity">Entity</h3>
 				<table>
 					<thead>
@@ -116,8 +114,7 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>Entity.<code>id</code></td>
 							<td>Last id used</td>
 						</tr>
@@ -173,8 +170,7 @@
 							<td><strong>#<code>toJSON</code></strong></td>
 							<td>NYI</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<h3 id="component">Component</h3>
 				<table>
 					<thead>
@@ -183,34 +179,39 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>Component.<code>types</code></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>Component.label</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>#<code>label</code></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>Component.Builder</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>#<code>eid</code></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>#<code>initialize</code></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>#<code>getComponentType</code></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>Component.<code>get</code></td>
 							<td>Shortcut to Component.types.get()</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<h3 id="componenttype">ComponentType</h3>
 				<table>
 					<thead>
@@ -219,19 +220,19 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>ComponentType.<code>label</code></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>ComponentType.<code>list</code></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>ComponentType.<code>systems</code></td>
 							<td>NYI Map -- Necessary?</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<h3 id="system">System</h3>
 				<table>
 					<thead>
@@ -240,8 +241,7 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>#<code>label</code></td>
 							<td>System Label</td>
 						</tr>
@@ -289,8 +289,7 @@
 							<td>System.<code>tick</code></td>
 							<td>Parent Tick function that ticks all systems</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<hr>
 				<h3 id="assemblage">Assemblage</h3>
 				<table>
@@ -300,13 +299,11 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>???</td>
 							<td>???</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<h3 id="entity-manager">Entity Manager</h3>
 				<table>
 					<thead>
@@ -315,13 +312,11 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>???</td>
 							<td>???</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 				<h3 id="template-">Template (?)</h3>
 				<table>
 					<thead>
@@ -330,13 +325,11 @@
 							<th>Description</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody><tr>
 							<td>???</td>
 							<td>???</td>
 						</tr>
-					</tbody>
-				</table>
+				</tbody></table>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -364,17 +357,29 @@
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/entitymanager.html" class="tsd-kind-icon">Entity<wbr>Manager</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 						<a href="classes/system.html" class="tsd-kind-icon">System</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter tsd-is-external">
-						<a href="interfaces/componenttype.html" class="tsd-kind-icon">Component<wbr>Type</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#componenttype" class="tsd-kind-icon">Component<wbr>Type</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-is-external">
-						<a href="globals.html#componentdata" class="tsd-kind-icon">Component<wbr>Data</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#componenttypes" class="tsd-kind-icon">Component<wbr>Types</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-external tsd-is-not-exported">
+						<a href="globals.html#frame_length" class="tsd-kind-icon">FRAME_<wbr>LENGTH</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-external tsd-is-not-exported">
+						<a href="globals.html#frame_pad" class="tsd-kind-icon">FRAME_<wbr>PAD</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-external tsd-is-not-exported">
+						<a href="globals.html#encomponents" class="tsd-kind-icon">en<wbr>Components</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#invalid" class="tsd-kind-icon">invalid</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
-						<a href="globals.html#registercomponent" class="tsd-kind-icon">Register<wbr>Component</a>
+						<a href="globals.html#isentity" class="tsd-kind-icon">is<wbr>Entity</a>
 					</li>
 				</ul>
 			</nav>

@@ -1,5 +1,5 @@
-import { Entity } from './entity';
 import { Component, ComponentType } from './component';
+import { Entity } from './entity';
 
 /**
  * The thing that actually runs Entities..
@@ -15,6 +15,9 @@ import { Component, ComponentType } from './component';
 //     killEntity(entity: Entity): void;
 // }
 
+/**
+ * Entity manager
+ */
 export class EntityManager /* implements IEntityManager */ {
 
 }
