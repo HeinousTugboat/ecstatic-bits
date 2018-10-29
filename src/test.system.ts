@@ -48,3 +48,6 @@ const joeActive = joe.add(ActiveComponent);
 System.tick(1);
 joeActive.makePrimary();
 console.log(ActiveComponent.primary);
+
+const a = System.list.get(input.label) as InputSystem;
+const b = System.get(InputSystem);

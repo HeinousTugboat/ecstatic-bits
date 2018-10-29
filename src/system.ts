@@ -13,6 +13,8 @@ const FRAME_PAD = 2;
  */
 export type ComponentTypes<T extends Component[]> = { [K in keyof T]: ComponentType<T[K] extends Component ? T[K] : never> };
 
+export interface SystemType<T extends System<Component[]>> { new (...args: any[]): T; }
+
 /**
  * System
  * @template T
@@ -25,11 +27,11 @@ export class System<T extends Component[]> {
   /**
    * List  of system
    */
-  static list: Map<string, System<any>> = new Map;
+  static list: Map<string, System<Component[]>> = new Map;
   /**
    * Active  of system
    */
-  static active: Set<System<any>> = new Set;
+  static active: Set<System<Component[]>> = new Set;
   /**
    * Frame  of system
    */
@@ -51,6 +53,10 @@ export class System<T extends Component[]> {
   static tick(dT: number): void {
     System.active.forEach(system => system.tick(dT));
     System.frame++;
+  }
+
+  static get<T extends System<Component[]>>(system: SystemType<T>): T | undefined {
+    return System.list.get(system.prototype.label) as T | undefined;
   }
 
   /**
