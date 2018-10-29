@@ -2,8 +2,8 @@
   "name": "ecstatic-bits",
   "version": "3.0.0",
   "description": "YAECS",
-  "main": "src/ecstatic-bits.ts",
-  "typings": "src/ecstatic-bits.ts",
+  "main": "lib/ecstatic-bits.js",
+  "typings": "lib/ecstatic-bits.d.ts",
   "scripts": {
     "docs": "typedoc --out docs --mode file src/ecstatic-bits.ts",
     "lint": "tslint --project .",
