@@ -105,6 +105,8 @@ export class Entity {
     if (!invalid(componentInstance)) {
       componentInstance.destroy();
     }
+
+    this.components.delete(component.name);
   }
 
   /**
