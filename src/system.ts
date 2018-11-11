@@ -100,7 +100,9 @@ export class System<T extends Component[]> {
         return [...this.entities.values()]
           .filter(entityComponents => entityComponents.every(component => component.entityId === entity.id));
       })
-    ).subscribe(componentArr => this.entities.delete(componentArr[0]));
+    ).subscribe(([entity]) => {
+      this.removed(entity);
+    });
   }
 
   /**
@@ -122,6 +124,10 @@ export class System<T extends Component[]> {
     if (System.debug) {
       console.log(`[${System.frame.toString(FRAME_LENGTH).padStart(FRAME_PAD)}] ${this.label}: ${components} `, dT);
     }
+  }
+
+  protected removed(components: T): void {
+    this.entities.delete(components);
   }
 
   /**
