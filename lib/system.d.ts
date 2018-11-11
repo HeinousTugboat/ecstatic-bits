@@ -22,5 +22,6 @@ export declare class System<T extends Component[]> {
     constructor(label: string, components: ComponentTypes<T>, active?: boolean);
     tick(dT: number): void;
     protected update(components: T, dT: number): void;
+    protected removed(components: T): void;
     execute(command: string, ...args: any[]): unknown;
 }
