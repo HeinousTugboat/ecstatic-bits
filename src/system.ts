@@ -101,6 +101,7 @@ export class System<T extends Component[]> {
           .filter(entityComponents => entityComponents.every(component => component.entityId === entity.id));
       })
     ).subscribe(([entity]) => {
+      this.entities.delete(entity);
       this.removed(entity);
     });
   }
@@ -126,9 +127,7 @@ export class System<T extends Component[]> {
     }
   }
 
-  protected removed(components: T): void {
-    this.entities.delete(components);
-  }
+  protected removed(components: T): void { }
 
   /**
    * Executes system
