@@ -109,6 +109,10 @@ export class Entity {
     this.components.delete(component.name);
   }
 
+  destroy(): void {
+    this.components.forEach(component => component.destroy());
+  }
+
   /**
    * To json
    * @returns json

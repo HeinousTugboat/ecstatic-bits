@@ -15,5 +15,6 @@ export declare class Entity {
     get<T extends Component>(component: ComponentType<T>): T | undefined;
     add<T extends Component>(component: ComponentType<T>): T;
     remove<T extends Component>(component: ComponentType<T>): void;
+    destroy(): void;
     toJSON(): string;
 }
