@@ -23,23 +23,25 @@ describe('System', () => {
 
   class TestSystem extends System<TestComponents> {
     static n = 1;
+    static label = `test-system-${TestSystem.n++}`;
     tick: SinonStub;
     update: SinonStub;
 
     constructor(active?: boolean) {
       if (active !== undefined) {
-        super(`test-system-${TestSystem.n++}`, [TestComponent, TestComponent2], active);
+        super([TestComponent, TestComponent2], active);
       } else {
-        super(`test-system-${TestSystem.n++}`, [TestComponent, TestComponent2]);
+        super([TestComponent, TestComponent2]);
       }
-      this.tick = systemSandbox.stub().callsFake( dT => super.tick(dT));
+      this.tick = systemSandbox.stub().callsFake(dT => super.tick(dT));
       this.update = systemSandbox.stub().callsFake((entity, dT) => super.update(entity, dT));
     }
   }
 
   class DummySystem extends System<[DummyComponent]> {
+    static label = `dummy-system-${TestSystem.n++}`;
     constructor() {
-      super(`dummy-system-${TestSystem.n++}`, [DummyComponent], true);
+      super([DummyComponent], true);
     }
   }
 
@@ -154,6 +156,34 @@ describe('System', () => {
     });
   });
 
+  describe('get', () => {
+    it('should return an existing system if it exists', () => {
+      const testSystem = new TestSystem();
+
+      expect(System.get(TestSystem)).to.equal(testSystem);
+    });
+
+    it('should return the correct existing system if two exist', () => {
+      const testSystem = new TestSystem();
+      const dummySystem = new DummySystem();
+
+      expect(System.get(TestSystem)).to.equal(testSystem);
+      expect(System.get(DummySystem)).to.equal(dummySystem);
+    });
+
+    it('should return undefined and the correct existing system if one exists', () => {
+      const testSystem = new TestSystem();
+
+      expect(System.get(TestSystem)).to.equal(testSystem);
+      expect(System.get(DummySystem)).to.be.undefined;
+    });
+
+    it('should return undefined it neither exists', () => {
+      expect(System.get(TestSystem)).to.be.undefined;
+      expect(System.get(DummySystem)).to.be.undefined;
+    })
+  });
+
   describe('prototype', () => {
     let testSystem: TestSystem;
     let activeSystem: TestSystem;
@@ -235,7 +265,7 @@ describe('System', () => {
           const dummySystem = new DummySystem();
           const entity = new Entity();
           entity.add(DummyComponent);
-          (<any> System).debug = true;
+          (<any>System).debug = true;
 
           System.tick(FRAME_DELAY);
 

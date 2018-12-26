@@ -13,7 +13,7 @@ const FRAME_PAD = 2;
  */
 export type ComponentTypes<T extends Component[]> = { [K in keyof T]: ComponentType<T[K] extends Component ? T[K] : never> };
 
-export interface SystemType<T extends System<Component[]>> { new (...args: any[]): T; }
+export interface SystemType<T extends System<Component[]>> { new(...args: any[]): T; label: string; }
 
 /**
  * System
@@ -36,6 +36,7 @@ export class System<T extends Component[]> {
    * Frame  of system
    */
   static frame = 1;
+  static label: string;
   /**
    * Hooks  of system
    */
@@ -56,7 +57,7 @@ export class System<T extends Component[]> {
   }
 
   static get<T extends System<Component[]>>(system: SystemType<T>): T | undefined {
-    return System.list.get(system.prototype.label) as T | undefined;
+    return System.list.get(system.label) as T | undefined;
   }
 
   /**
@@ -65,12 +66,14 @@ export class System<T extends Component[]> {
    * @param components
    * @param [active]
    */
+  public label: string;
+
   constructor(
-    public label: string,
     public components: ComponentTypes<T>,
     private active: boolean = true
   ) {
-    System.list.set(label, this);
+    this.label = (this.constructor as typeof System).label;
+    System.list.set(this.label, this);
 
     if (active) {
       System.active.add(this);

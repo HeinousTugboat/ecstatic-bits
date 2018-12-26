@@ -27,13 +27,14 @@ class ActiveComponent extends Component {
 export type InputComponents = [ActiveComponent];
 
 class InputSystem extends System<InputComponents> {
+  static label = 'input';
   hooks = {
     LOAD_B64: () => { },
     ACCEPT: () => { }
   };
 
   constructor() {
-    super('input', [ActiveComponent], true);
+    super([ActiveComponent]);
   }
 
   update() {
@@ -51,3 +52,5 @@ console.log(ActiveComponent.primary);
 
 const a = System.list.get(input.label) as InputSystem;
 const b = System.get(InputSystem);
+
+console.log(a === b);
